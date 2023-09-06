@@ -25,11 +25,38 @@ model = ResNet50(weights='imagenet')
 
 @app.get("/comments")
 async def pay_attension():
-    return {"message": "See ResNet50 Class List on deeplearning.cms.waikato.ac.nz"}
+    """
+    The function displays a warning to look at the list of classes
+    that the ResNet50 network can predict. An attempt to predict another
+    class of object will lead to incorrect results.
+
+    Returns:
+        _type_: _description_
+    """
+    return {"message": "See ResNet50 Class List on\n" 
+            "deeplearning.cms.waikato.ac.nz"}
 
 
 @app.post("/file_properties/")
 async def create_image_properties(file: UploadFile):
+    """
+    The function checks the format and size of the aploaded file (image).
+    If the file has weight greater than 10 Mb, a message about the need
+    to upload a smaller file is displayed. If the file format is different
+    from jpg/jpeg, the message about the necessity to upload a file of  
+    jpg/jpeg format is displayed.The function also outputs information 
+    about the file name and its format and size.
+    
+    Args:
+        file (UploadFile): _description_
+
+    Raises:
+        HTTPException: _description_
+        HTTPException: _description_
+
+    Returns:
+        _type_: _description_
+    """
     
     file.file.seek(0, 2)
     file_size = file.file.tell()
@@ -48,35 +75,56 @@ async def create_image_properties(file: UploadFile):
 
 @app.post("/uploadfile/")
 async def predict_image(file: bytes = File(...)):
+    """
+    The main function that predicts the class of an image.
     
-    # read image
+    Args:
+        file (bytes, optional): _description_. Defaults to File(...).
+
+    Returns:
+        _type_: _description_
+    """
+    
     image = read_image(file)
-    # transform and prediction 
     prediction = process_image(image)   
 
     return prediction
 
 
 def read_image(file) -> Image.Image:
+    """
+    The funtion reads the received information as a bute stream and
+    converts it into a pixel image.
+
+    Args:
+        file (_type_): _description_
+
+    Returns:
+        Image.Image: _description_
+    """
     pixel_image = Image.open(BytesIO(file))
-    #print('print dentro da funcao --- ok ')
+   
     return pixel_image
 
 
 def process_image(file: Image.Image):
+    """
+    The function performs image pocessing and predicts.
+    The prediction results are the names of the three
+    best-fit classes with an indicdtion of the prediction
+    probability.
 
-    #img_path = 'image3.jpeg'
-    #img = image.load_img(file, target_size=(224, 224))
+    Args:
+        file (Image.Image): _description_
+    """
+
     img = np.asarray(file.resize((224, 224)))[..., :3]
     img = image.img_to_array(img)
     img = np.expand_dims(img, axis=0)
     img = preprocess_input(img)
     prediction = model.predict(img)
-# decode the results into a list of tuples (class, description, probability)
-# (one such list for each sample in the batch)
-    #result = {}
+
     print('Predicted:', decode_predictions(prediction, top = 3 )[0])
-    #result = decode_predictions(preds, top=3)[0]
     result = decode_predictions(model.predict(img), 3)[0]
     
     response = []
