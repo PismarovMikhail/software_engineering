@@ -10,8 +10,8 @@ def test_read_app():
     response = client.get("/")
     assert response.status_code == 200
     assert response.json() == {"message": "Hello, dear friend"}
-    
-    
+
+
 def test_create_image_properties():
     """_summary_
     """
@@ -34,11 +34,3 @@ def test_process_image():
     """_summary_
     """
     pass
-
-
-
-
-
-    
-    
-
