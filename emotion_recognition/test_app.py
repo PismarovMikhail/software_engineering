@@ -13,24 +13,5 @@ def test_read_app():
 
 
 def test_create_image_properties():
-    """_summary_
+    """_summary
     """
-    pass
-
-
-def test_predict_image():
-    """_summary_
-    """
-    pass
-
-
-def test_read_image():
-    """_summary_
-    """
-    pass
-
-
-def test_process_image():
-    """_summary_
-    """
-    pass
