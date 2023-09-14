@@ -1,3 +1,4 @@
+import fastapi
 from fastapi.testclient import TestClient
 from emotion_recognition.app import app
 
