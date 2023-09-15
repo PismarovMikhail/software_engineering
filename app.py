@@ -24,13 +24,6 @@ def root():
     The function welcomes the user of the application.
     It is also used to test the availability of the
     application when accessing the server root.
-
-    Raises:
-        HTTPException: _description_
-        HTTPException: _description_
-
-    Returns:
-        _type_: _description_
     """
     return {"message": "Hello, dear friend!"}
 
@@ -41,9 +34,6 @@ async def pay_attention():
     The function displays a warning to look at the list of classes
     that the ResNet50 network can predict. An attempt to predict another
     class of object will lead to incorrect results.
-
-    Returns:
-        _type_: _description_
     """
     return {"message": "See ResNet50 Class List on"
                        "deeplearning.cms.waikato.ac.nz"}
@@ -58,15 +48,6 @@ async def create_image_properties(file: UploadFile):
     from jpg/jpeg, the message about the necessity to upload a file of
     jpg/jpeg format is displayed.The function also outputs information
     about the file name and its format and size.
-    Args:
-        file (UploadFile): _description_
-
-    Raises:
-        HTTPException: _description_
-        HTTPException: _description_
-
-    Returns:
-        _type_: _description_
     """
     file.file.seek(0, 2)
     file_size = file.file.tell()
@@ -89,10 +70,6 @@ async def create_image_properties(file: UploadFile):
 async def predict_image(file: bytes = File(...)):
     """
     The main function that predicts the class of an image.
-    Args:
-        file (bytes, optional): _description_. Defaults to File(...).
-    Returns:
-        _type_: _description_
     """
     image = read_image(file)
     prediction = process_image(image)
@@ -103,12 +80,6 @@ def read_image(file) -> Image.Image:
     """
     The funtion reads the received information as a bute stream and
     converts it into a pixel image.
-
-    Args:
-        file (_type_): _description_
-
-    Returns:
-        Image.Image: _description_
     """
     pixel_image = Image.open(BytesIO(file))
     return pixel_image
@@ -120,9 +91,6 @@ def process_image(file: Image.Image):
     The prediction results are the names of the three
     best-fit classes with an indicdtion of the prediction
     probability.
-
-    Args:
-        file (Image.Image): _description_
     """
 
     img = np.asarray(file.resize((224, 224)))[..., :3]
