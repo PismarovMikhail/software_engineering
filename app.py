@@ -79,7 +79,7 @@ async def predict_image(file: bytes = File(...)):
 def read_image(file) -> Image.Image:
     """
     The funtion reads the received information as a bute stream and
-    converts it into a pixel image. 
+    converts it into a pixel image . 
     """
     pixel_image = Image.open(BytesIO(file))
     return pixel_image
