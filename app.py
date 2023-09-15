@@ -90,7 +90,7 @@ def process_image(file: Image.Image):
     The function performs image pocessing and predicts.
     The prediction results are the names of the three
     best-fit classes with an indicdtion of the prediction
-    probability.
+    probability .
     """
 
     img = np.asarray(file.resize((224, 224)))[..., :3]
